@@ -29,10 +29,9 @@ Hardware Requirements
 Prerequisites
 -------------
 
-* Latest NodeJS (for this project we used 7.9.0):
+* NodeJS 8.11.3. How about you use [n](https://www.npmjs.com/package/n) to get it?
 
-      curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
-      sudo apt install nodejs
+* Gulp `npm install gulp-cli -g`
 
 * OpenCV and Python bindings:
 
@@ -51,6 +50,14 @@ Usage
 -----
 
     nodejs catchAndServe
+
+Run tests:
+
+    npm test
+
+Develop:
+
+    gulp
 
 This command will start a webserver on the raspberry which acts as an interface to any interested client. This is basically just for monitoring but can be used for interaction as well.
 

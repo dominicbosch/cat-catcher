@@ -1,0 +1,31 @@
+{
+  "name": "cat-catcher",
+  "version": "0.9.9",
+  "description": "Catching Cats",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-clean": "^0.4.0",
+    "mocha": "^5.2.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dominicbosch/cat-catcher.git"
+  },
+  "author": "Dominic Bosch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dominicbosch/cat-catcher/issues"
+  },
+  "homepage": "https://github.com/dominicbosch/cat-catcher#readme",
+  "contributors": {
+    "name": "Peter Bosch"
+  }
+}

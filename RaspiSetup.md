@@ -33,7 +33,7 @@ Update & Install Raspberry
 
 - Reboot
 
-      sudo apt install python-smbus i2c-tools feh git python-skimage python-picamera
+      sudo apt install python-smbus i2c-tools feh git python-skimage python-picamera pigpio
       sudo raspi-config
 
   - `[7 -> A1]` Expand filesystem
