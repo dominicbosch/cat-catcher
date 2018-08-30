@@ -23,12 +23,12 @@ module.exports = class Ultrasonic {
 
 	start() {
 		// Register echo handler
-		echo.on('alert', (level, tick) => {
+		this.echo.on('alert', (level, tick) => {
 			if (level == 1) {
 				this.startTick = tick;
 			} else {
 				let endTick = tick;
-				 // Unsigned 32 bit arithmetic:
+				// Unsigned 32 bit arithmetic:
 				let diff = (endTick >> 0) - (this.startTick >> 0);
 				emitEvent(diff / 2 / MICROSECDONDS_PER_CM);
 			}
@@ -55,6 +55,6 @@ function emitEvent(data) {
 		// execute them as soon as there are available resources (JS best practice).
 		// This will not block the current scope even if one of the callbacks causes
 		// heavy CPU or I/O load
-		setTimeout(() => { arrEventListeners[i](data) }, 0);
+		setTimeout(() => { arrEventListeners[i](data); }, 0);
 	}
 }
