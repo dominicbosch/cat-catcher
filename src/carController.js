@@ -34,9 +34,7 @@ exports.init = function(config) {
 		if(conf[reqConfig[i]]===undefined) miss.push(reqConfig[i]);
 	}
 	// This is an interesting way to return a rejected promise :-P
-	if(miss.length > 0) return new Promise((r, reject) => {
-		reject('Some confuration is missing: '+miss.join(', '));
-	});
+	if(miss.length > 0) return Promise.reject(new Error('Some confuration is missing: '+miss.join(', ')));
 
 	if(conf.v) console.log('Initializing with config:\n'+JSON.stringify(conf, null, 2));
 	let ret = car.init(conf);
@@ -44,13 +42,13 @@ exports.init = function(config) {
 
 	numMeasurements = conf.obstacleCount;
 
-	pyFaces.on('warn', function(d) { console.log('pythonFaces Warning: ', d) });
-	pyFaces.on('error', function(d) { console.log('pythonFaces Error: ', d) });
-	pyFaces.on('fps', function(d) { emitEvent('camerafps', d) });
+	pyFaces.on('warn', function(d) { console.log('pythonFaces Warning: ', d); });
+	pyFaces.on('error', function(d) { console.log('pythonFaces Error: ', d); });
+	pyFaces.on('fps', function(d) { emitEvent('camerafps', d); });
 	pyFaces.on('face', handleNewFace);
-	pyFaces.on('detectfps', function(d) { emitEvent('detectfps', d) });
-	pyFaces.on('storedimage', function(d) { emitEvent('storedimage', d) });
-	pyFaces.on('storedface', function(d) { emitEvent('storedface', d) });
+	pyFaces.on('detectfps', function(d) { emitEvent('detectfps', d); });
+	pyFaces.on('storedimage', function(d) { emitEvent('storedimage', d); });
+	pyFaces.on('storedface', function(d) { emitEvent('storedface', d); });
 
 	return ret;
 };
@@ -76,7 +74,7 @@ function emitEvent(type, msg) {
 			type: type,
 			message: msg,
 			timestamp: (new Date()).getTime()
-		}
+		};
 		for (var i = 0; i < arrEventListeners.length; i++) {
 			putSendOnStack(arrEventListeners[i], evt);
 		}
@@ -98,7 +96,7 @@ function putSendOnStack(func, evt) {
 
 // we assume three consecutive obstacle measurements at initialization,
 // which means we got a verified obstacle, which we define at a distance of zero.
-let numMeasurements = 0;;
+let numMeasurements = 0;
 let frontObstacle = 0;
 let currentSpeed = 0;
 
@@ -108,7 +106,7 @@ function handleNewFace(oFace) {
 	// IDs are sorted from biggest to smallest
 	if(oFace.id === 0) {
 		if(conf.v) console.log('Face detected at relX: ', oFace.relX);
-		emitEvent('facedetected', oFace.relX)
+		emitEvent('facedetected', oFace.relX);
 		facePosition = oFace.relX;
 		lastFaceDetect = (new Date()).getTime();
 		//FIXME here it seems currentSpeed is zero when we are slowing down...
