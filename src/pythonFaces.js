@@ -20,7 +20,7 @@ exports.on = function(evt, func) {
 		if(!eventListeners[evt]) eventListeners[evt] = [];
 		eventListeners[evt].push(func);
 	} else console.error('Invalid event handler function for event '+evt);
-}
+};
 exports.start = function() {
 	if(!pythonProcess) {
 		// -u flag prevents python process from buffering outputs, thus causing late notifications
@@ -54,20 +54,21 @@ exports.start = function() {
 	} else emitEvent('warn', 'Face detection is already running!');
 };
 
-function reportError(data) { emitEvent('error', data+'') }
+function reportError(data) { emitEvent('error', data+''); }
 
-exports.stop = function(opts) {
+exports.stop = function() {
 	if(pythonProcess) {
 		pythonProcess.kill();
 		pythonProcess = null;
 	} else emitEvent('warn', 'Face detection is not running!');
 };
-exports.isRunning = function(opts) {
+exports.isRunning = function() {
 	return (pythonProcess !== null);
 };
 
 let arrFaceKeys = ['id', 'x', 'y', 'w', 'h', 'relX', 'relY', 'relW', 'relH'];
 function processLine(line) {
+	let strng;
 	if(line.indexOf(strng='Camera | FPS: ') > -1) {
 		emitEvent('fps', parseFloat(extractValue(line, strng)));
 	} else if(line.indexOf(strng='FaceDetect | Detect FPS: ') > -1) {
@@ -98,7 +99,7 @@ function extractValue(line, str, cutoff) {
 
 function emitEvent(evt, data) {
 	if(eventListeners[evt] === undefined) {
-		console.warn('No event listener attached for "'+evt+'"')
+		console.warn('No event listener attached for "'+evt+'"');
 	} else {
 		for (let i = 0; i < eventListeners[evt].length; i++) {
 			eventListeners[evt][i](data);
