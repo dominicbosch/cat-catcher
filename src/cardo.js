@@ -79,7 +79,7 @@ exports.break = function() {
 			pwmDriver.setPWM(config.motorDevice, 0, config.motorNeutral);
 		}, 100);
 	}
-}
+};
 
 /*
  * Speed in direction: backward [-1 ... 1] forward
@@ -88,7 +88,7 @@ exports.setSpeed = function(direction) {
 	isBreaking = false;
 	let val = getRampValue(direction, config.motorBack, config.motorNeutral, config.motorForward);
 	pwmDriver.setPWM(config.motorDevice, 0, val);
-}
+};
 
 // We only start polling the front distance if somebody is interested in the measurements
 let isOn = false;
@@ -100,7 +100,7 @@ exports.onFrontDistance = function(cb) {
 			ultrasonic.start();
 		}
 	}
-}
+};
 
 
 /*
@@ -159,4 +159,4 @@ exports.shutdown = function() {
 	if(config && config.v) console.log('Car shutting down!');
 	ultrasonic.stop();
 	// distPoller.kill();
-}
+};
