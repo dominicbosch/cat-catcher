@@ -6,7 +6,7 @@ import signal
 import datetime
 import traceback
 import argparse # easy parsing of command line
-from cameraclassifier import CameraClassifier
+from cameraClassifier import CameraClassifier
 
 # Define possible command line arguments
 parser = argparse.ArgumentParser(description='Look for cats on the PI Camera')

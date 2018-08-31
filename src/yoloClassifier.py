@@ -44,7 +44,7 @@ class YoloClassifier:
 		
 		strt = datetime.now()
 		self.graph.LoadTensor(im.astype(np.float16), 'user object')
-		out, userobj = self.graph.GetResult()
+		out, _userobj = self.graph.GetResult()
 		
 		end = datetime.now()
 		elapsedTime = end-strt
@@ -67,9 +67,9 @@ class YoloClassifier:
 		h_img = img_height
 		threshold = 0.2
 		iou_threshold = 0.5
-		num_class = 20
-		num_box = 2
-		grid_size = 7
+		# num_class = 20
+		# num_box = 2
+		# grid_size = 7
 		probs = np.zeros((7,7,2,20))
 		class_probs = (np.reshape(output[0:980],(7,7,20)))#.copy()
 		#print(class_probs)
@@ -130,25 +130,25 @@ class YoloClassifier:
 
 	def tagImage(self, img, result, maxWidth, maxHeight):
 		for el in result[1]:
-			x = int(el[1]);
-			y = int(el[2]);
-			w = int(el[3])//2;
-			h = int(el[4])//2;
-			xmin = x-w;
-			xmax = x+w;
-			ymin = y-h;
-			ymax = y+h;
+			x = int(el[1])
+			y = int(el[2])
+			w = int(el[3])//2
+			h = int(el[4])//2
+			xmin = x-w
+			xmax = x+w
+			ymin = y-h
+			ymax = y+h
 			if xmin<0:
-				xmin = 0;
+				xmin = 0
 			if ymin<0:
-				ymin = 0;
+				ymin = 0
 			if xmax>maxWidth:
-				xmax = maxWidth;
+				xmax = maxWidth
 			if ymax>maxHeight:
-				ymax = maxHeight;
-			cv2.rectangle(img,(xmin,ymin),(xmax,ymax),(0,255,0),2);
-			cv2.rectangle(img,(xmin,ymin-20),(xmax,ymin),(125,125,125),-1);
-			cv2.putText(img,el[0] + ' : %.2f' % el[5],(xmin+5,ymin-7),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,0,0),1);
+				ymax = maxHeight
+			cv2.rectangle(img,(xmin,ymin),(xmax,ymax),(0,255,0),2)
+			cv2.rectangle(img,(xmin,ymin-20),(xmax,ymin),(125,125,125),-1)
+			cv2.putText(img,el[0] + ' : %.2f' % el[5],(xmin+5,ymin-7),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,0,0),1)
 
 	def close(self):
 		self.graph.DeallocateGraph()
