@@ -17,7 +17,7 @@ class PiVideoStream:
 	):
 		# initialize the camera and stream
 		if verbose:
-			print 'Starting camera with res={}x{}, hflip={}, vflip={}'.format(res[0], res[1], hflip, vflip)
+			print('Starting camera with res={}x{}, hflip={}, vflip={}'.format(res[0], res[1], hflip, vflip))
 		self.camera = PiCamera(resolution=res, framerate=framerate, sensor_mode=sensor_mode)
 		self.camera.hflip = hflip
 		self.camera.vflip = vflip
@@ -47,7 +47,7 @@ class PiVideoStream:
 			if self.frameNum == 10:
 				now = time.time()
 				if self.verbose:
-					print 'Camera | FPS: {0:.2f}'.format(10.0/(now-wallStart))
+					print('Camera | FPS: {0:.2f}'.format(10.0/(now-wallStart)))
 				self.frameNum = 0
 				wallStart = now
 			# grab the frame from the stream and clear the stream in

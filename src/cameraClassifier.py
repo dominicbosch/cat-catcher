@@ -19,7 +19,7 @@ class CameraClassifier:
 		storeAllImages=False,
 		verbose=False
 	):
- 		self.imageWidth = float(res[0])
+		self.imageWidth = float(res[0])
 		self.imageHeight = float(res[1])
 		self.hflip = hflip
 		self.vflip = vflip
@@ -63,7 +63,7 @@ class CameraClassifier:
 				timestamp = datetime.datetime.now()
 				ts = timestamp.strftime('%Y.%m.%d_%I:%M:%S')
 				if self.verbose:
-					print 'CameraClassifier | found {} in {} ms Detect FPS: {:.2f}'.format(len(ret[1]),ret[0],1/(now-startDetect))
+					print('CameraClassifier | found {} in {} ms Detect FPS: {:.2f}'.format(len(ret[1]),ret[0],1/(now-startDetect)))
 
 				if len(ret[1]) > 0:
 					arrThings = []
@@ -111,7 +111,8 @@ class CameraClassifier:
 			else:
 				time.sleep(0.010)
 
-	def getSortMeasure(self, (x,y,w,h), t):
+	def getSortMeasure(self, tupl, t):
+		_x,_y,w,h = tupl
 		return int(100 / (w*h)) # calculate the area of the thing
 
 	# Callback executed from the pivideostream, registers new frames
