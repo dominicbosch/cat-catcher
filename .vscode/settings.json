@@ -1,0 +1,23 @@
+{
+    "python.pythonPath": "/usr/bin/python3",
+    "python.unitTest.unittestEnabled": true,
+    "python.unitTest.promptToConfigure": false,
+    "python.unitTest.pyTestEnabled": false,
+    "python.unitTest.nosetestsEnabled": false,
+    "editor.insertSpaces": false,
+    "editor.tokenColorCustomizations": {
+        "textMateRules":[
+            {
+                "scope": "storage.type.class.todo",
+                "settings": {
+                    "foreground": "#FFFF00"
+                }
+            },
+            {
+                "scope": "storage.type.class.fixme",
+                "settings": {
+                    "foreground": "#ff0000"
+                }
+            }
+        ]}
+}

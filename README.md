@@ -1,4 +1,15 @@
 # cat-catcher
+
+# New Procsedure
+
+## Installation
+
+    sudo apt install pigpio
+
+
+# Old Procedure
+
+
 Playing CATch
 
 Using the Raspberry / Arduino / PWM Board / C / Python / Nodejs to create an autonmously driving car that chases faces or other recognized things in your garden or wherever they are not supposed to be :wink:

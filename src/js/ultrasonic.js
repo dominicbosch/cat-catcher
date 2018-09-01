@@ -9,9 +9,10 @@ module.exports = class Ultrasonic {
 		this.trigger = new Gpio(pinTrigger || 4, {mode: Gpio.OUTPUT});
 		this.echo = new Gpio(pinEcho || 17, {mode: Gpio.INPUT, alert: true});
 		this.trigger.digitalWrite(0); // Make sure trigger is low
+		// TODO we should average over at least three measurements, therefore divide
+		// the interval by three and only return the average
 		this.interval = interval || 1000;
 	}
-	
 	// Allow registration of event listeners
 	onObstacle(func) {
 		if(typeof func === 'function') {
