@@ -11,6 +11,7 @@
     "eslint": "^5.4.0",
     "gulp": "^4.0.0",
     "gulp-clean": "^0.4.0",
+    "jshint": "^2.9.6",
     "mocha": "^5.2.0"
   },
   "scripts": {
@@ -26,7 +27,9 @@
     "url": "https://github.com/dominicbosch/cat-catcher/issues"
   },
   "homepage": "https://github.com/dominicbosch/cat-catcher#readme",
-  "contributors": [{
-    "name": "Peter Bosch"
-  }]
+  "contributors": [
+    {
+      "name": "Peter Bosch"
+    }
+  ]
 }
