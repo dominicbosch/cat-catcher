@@ -1,4 +1,4 @@
-const pyFaces = require('pythonFaces');
+const pyFaces = require('./pythonFaces');
 const car = require('./cardo');
 
 var exports = module.exports = {};

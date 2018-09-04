@@ -3,7 +3,7 @@
 // https://github.com/kaosat-dev/adafruit-i2c-pwm-driver
 
 // const cp = require('child_process');
-const ultrasonic = require('ultrasonic');
+const ultrasonic = require('./ultrasonic');
 const makePwmDriver = require('../i2c/pwmDriver');
 const pwmDriver = makePwmDriver({address: 0x40, device: '/dev/i2c-1', debug: false});
 
