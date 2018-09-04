@@ -4,6 +4,13 @@
     "python.unitTest.promptToConfigure": false,
     "python.unitTest.pyTestEnabled": false,
     "python.unitTest.nosetestsEnabled": false,
+    "python.unitTest.unittestArgs": [
+        "-v",
+        "-s",
+        "/home/dominic/projects/cat-catcher/test",
+        "-p",
+        "test*.py"
+     ],
     "editor.insertSpaces": false,
     "editor.tokenColorCustomizations": {
         "textMateRules":[
