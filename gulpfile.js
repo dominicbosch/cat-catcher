@@ -13,6 +13,12 @@ gulp.task('build', ['clean'], function (cb) {
 	});
 });
 
+// Move all relevant sources to the build folder
+gulp.task('build-dev', ['clean'], function () {
+	return gulp.src('src')
+		.pipe(gulp.dest('dist'));
+});
+
 gulp.task('clean', function () {
 	return gulp.src('build', {read: false})
 		.pipe(clean());
