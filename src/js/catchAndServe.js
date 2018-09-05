@@ -54,11 +54,6 @@ function stopEngine() {
 	io.emit('engine-stopped');
 }
 
-function broadcast(cmd, val) {
-	io.emit(cmd, val);
-	console.log('Broadcasting command='+cmd+', value='+val);
-}
-
 chokidar.watch('../camera/detected-faces/*.jpg').on('add', path => {
 	// Give the raspberry 100ms time to store the image properly before reading it
 	// Only needed for huge images...
