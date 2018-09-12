@@ -1,12 +1,10 @@
-Setup a Raspberry from Scratch for this project
-===============================================
+# Setup a Raspberry from Scratch for this project
 
 - Download [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/)
 - Flash to SD card and plug SD card into raspberry.
 
 
-Configure SSH, Safety and Wireless
-----------------------------------
+## Configure SSH, Safety and Wireless
 
 - Boot with screen and keyboard connected to raspberry
 - Login with user `pi` password `raspberry`
@@ -20,8 +18,7 @@ Configure SSH, Safety and Wireless
 - `sudo shutdown now`, unplug power, then unplug monitor and keyboard
 
 
-Update & Install Raspberry
--------------------------- 
+## Update & Install Raspberry
 
 - Plug in power
 - Connect to raspi via SSH using new hostname (e.g. `ssh pi@cat-catcher-1`)
@@ -48,8 +45,7 @@ Update & Install Raspberry
       sudo reboot now
 
 
-Install Movidius Neural Compute Stick
--------------------------------------
+## Install Movidius Neural Compute Stick
 
 This will take a while on the Raspberry because it also installs OpenCV, which has been a pain before. Thank you Movidius for making this easy ;)
 
@@ -64,8 +60,7 @@ Open new shell and execute:
 	make examples
 
 
-Clone yoloNCS
--------------
+## Clone yoloNCS
 
 Great framework for location detection of classified object in image
 
@@ -77,25 +72,16 @@ Great framework for location detection of classified object in image
 - Store caffemodel from [here](https://drive.google.com/file/d/0Bzy9LxvTYIgKNFEzOEdaZ3U0Nms/view?usp=sharing) in `~/projects/yoloNCS/.weights` folder
 
 
-Clone Family-Project
---------------------
+## Clone cat-Catcher Project
 
 	cd ~/projects
-	git clone https://github.com/dominicbosch/family-project.git
+	git clone https://github.com/dominicbosch/cat-catcher.git
+	cd cat-catcher
+	npm install --production
 
 
-Install
--------
+## Compile yoloNCS graph
 
 	cd ~/projects/yoloNCS
 	mvNCCompile prototxt/yolo_tiny_deploy.prototxt -w .weights/yolo_tiny.caffemodel -s 12
-	mv graph ~/projects/family-project/camera
-
-
-Test Camera Classification
---------------------------
-
-	cd ~/projects/family-project/examples
-	python testYoloCamera.py
-
-The detected images will be found in `camera/output`
+	mv graph ~/projects/cat-catcher/dist

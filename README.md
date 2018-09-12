@@ -1,10 +1,17 @@
 # cat-catcher
 
-# New Procsedure
+## Prerequisites
 
-## Installation
+* NodeJS 8.11.3. How about you use [n](https://www.npmjs.com/package/n) to get it?
 
-    sudo apt install pigpio
+* Gulp `npm install gulp-cli -g`
+
+* Please follow installation instructions in [RaspiSetup.md](RaspiSetup.md) in order to properly setup a raspberry to run this project
+
+## Run
+
+    runCatcherOnRaspi.sh
+
 
 
 # Old Procedure
@@ -40,39 +47,19 @@ Hardware Requirements
 Prerequisites
 -------------
 
-* NodeJS 8.11.3. How about you use [n](https://www.npmjs.com/package/n) to get it?
-
-* Gulp `npm install gulp-cli -g`
-
 * OpenCV and Python bindings:
 
       sudo apt-get install libopencv-dev python-opencv
 
 
-Installation
-------------
+Test Camera Classification
+--------------------------
 
-    git clone https://github.com/dominicbosch/family-project.git
-    cd family-project
-    npm install
+	cd ~/projects/family-project/examples
+	python testYoloCamera.py
 
+The detected images will be found in `camera/output`
 
-Usage
------
-
-    nodejs catchAndServe
-
-Run tests:
-
-    npm test
-
-Develop:
-
-    gulp
-
-This command will start a webserver on the raspberry which acts as an interface to any interested client. This is basically just for monitoring but can be used for interaction as well.
-
-The main purpose of the program is a sentry car that checks the perimeter for patterns (faces/cats) and, upon recognition, starts driving towards the pattern (face/cat), trying to catch it.
 
 Recommended Parameters
 ----------------------
