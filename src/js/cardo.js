@@ -3,8 +3,8 @@
 // https://github.com/kaosat-dev/adafruit-i2c-pwm-driver
 
 // const cp = require('child_process');
-const ultrasonic = require('./ultrasonic');
-const makePwmDriver = require('../i2c/pwmDriver');
+const Ultrasonic = require('./ultrasonic');
+const makePwmDriver = require('./pwmDriver');
 const pwmDriver = makePwmDriver({address: 0x40, device: '/dev/i2c-1', debug: false});
 
 // Preparing the object orientation (everything attached to exports is visible from outside)
@@ -21,13 +21,14 @@ let requiredConfig = [
 	'motorForward'
 ];
 let config;
+let us = new Ultrasonic();
 
 exports.init = function(args) {
 	// Setting the PWM frequency and returning this "Promise chain"
 	return pwmDriver.init()
 		.then(() => pwmDriver.setPWMFreq(60))
 		// then initializing the config
-		.then(function() {
+		.then(() => {
 			let miss = [];
 			// Test whether some configuration variables are missing
 			for(let i = 0; i < requiredConfig.length; i++) {
@@ -37,6 +38,9 @@ exports.init = function(args) {
 			let msg = 'Cardo is missing or finding invalid integers in conf variable(s): '+miss.join(', ');
 			if(miss.length > 0) throw new Error(msg);
 			else config = args;
+		})
+		.catch((err) => {
+			console.error(err);
 		});
 };
 
@@ -57,7 +61,7 @@ function getRampValue(direction, min, base, max) {
 exports.setSteering = function(direction) {
 	if(!config) throw new Error('Not yet initialized! Please invoke init method first!');
 	let val = getRampValue(direction, config.steerLeft, config.steerCenter, config.steerRight);
-	pwmDriver.setPWM(config.steerDevice, 0, val);
+	pwmDriver.setPWM(config.steerDevice, 0, val).catch(console.error);
 };
 
 /*
@@ -72,7 +76,7 @@ exports.break = function() {
 	if(!isBreaking) {
 		isBreaking = true;
 		// Send full back to stop
-		pwmDriver.setPWM(config.motorDevice, 0, config.motorBack);
+		pwmDriver.setPWM(config.motorDevice, 0, config.motorBack).catch(console.error);
 
 		// After 100ms send neutral position
 		setTimeout(function() {
@@ -87,17 +91,17 @@ exports.break = function() {
 exports.setSpeed = function(direction) {
 	isBreaking = false;
 	let val = getRampValue(direction, config.motorBack, config.motorNeutral, config.motorForward);
-	pwmDriver.setPWM(config.motorDevice, 0, val);
+	pwmDriver.setPWM(config.motorDevice, 0, val).catch(console.error);
 };
 
 // We only start polling the front distance if somebody is interested in the measurements
 let isOn = false;
 exports.onFrontDistance = function(cb) {
 	if((typeof cb) === 'function') {
-		ultrasonic.onObstacle(cb);
+		us.onObstacle(cb);
 		if(!isOn) {
 			isOn = true;
-			ultrasonic.start();
+			us.start();
 		}
 	}
 };
@@ -157,6 +161,6 @@ exports.onFrontDistance = function(cb) {
 
 exports.shutdown = function() {
 	if(config && config.v) console.log('Car shutting down!');
-	ultrasonic.stop();
+	us.stop();
 	// distPoller.kill();
 };

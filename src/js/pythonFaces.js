@@ -1,11 +1,12 @@
 const cp = require('child_process');
-const childProcessName = 'lookForFaces.py';
+const path = require('path');
+const childProcessName = 'identifyCatsNCS.py';
 
 var exports = module.exports = {};
 
 let pythonProcess = null;
 let eventListeners = {};
-let options;
+let options = {};
 
 
 exports.init = function(opts) {
@@ -25,7 +26,7 @@ exports.start = function() {
 	if(!pythonProcess) {
 		// -u flag prevents python process from buffering outputs, thus causing late notifications
 		// we need the -v flag in order to fet the detect time and FPS info
-		let args = ['-u', __dirname+'/'+childProcessName, '-v'];
+		let args = ['-u', path.normalize(__dirname+'/../py/'+childProcessName), '-v'];
 		// for arguments description run on command line: python lookForFaces.py --help
 		if(options.s) args.push('-s');
 		if(options.sa) args.push('-sa');
