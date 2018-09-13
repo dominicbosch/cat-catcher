@@ -1,4 +1,4 @@
-//const spawn = require('child_process').spawn;
+const spawn = require('child_process').spawn;
 const gulp = require('gulp');
 const clean = require('gulp-clean');
 const install = require('gulp-install');
@@ -78,8 +78,7 @@ function deployDevStubsPython() {
 }
 
 function runCatCatcher() {
-	// FIXME uncommenting this leads to gulpfile not being able to be processed by vs code
-	//spawn('node', ['dist/js/index.js'], { stdio: 'inherit' });
+	spawn('node', ['build/js/index.js'], { stdio: 'inherit' });
 }
 
 // Execute custom command
