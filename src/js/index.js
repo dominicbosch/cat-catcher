@@ -1,7 +1,7 @@
 
 const car = require('./carController');
 
-car.init({
+const conf = {
 	s: true,
 	sa: true,
 	v: true,
@@ -24,8 +24,10 @@ car.init({
 	speedUpTime: 3000,
 	stayTime: 5000,
 	stopTime: 10000
-});
-car.start();
+};
+
+car.init(conf)
+	.then(car.start);
 
 process.on('SIGINT', function() {
 	console.log('Caught SIGINT');

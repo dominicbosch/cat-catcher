@@ -10,13 +10,14 @@ class PiCamera():
             self, output, format=None, use_video_port=False, resize=None,
             splitter_port=0, burst=False, bayer=False, **options):
         
-        # outp = list()
+        # outp = list({'array': 'stub'})
         
         while True:
             print('STUB: PiCamera capture_continuous')
-            # outp.extend()
-            time.sleep(5)
-            yield 'test'
+            # FIXME generate frame array to be returned
+            # outp.extend({ 'array': 'stub' })
+            # yield outp
+            yield 'stub'
 
     def close(self):
         print('STUB: PiCamera close')

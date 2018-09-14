@@ -38,9 +38,6 @@ exports.init = function(args) {
 			let msg = 'Cardo is missing or finding invalid integers in conf variable(s): '+miss.join(', ');
 			if(miss.length > 0) throw new Error(msg);
 			else config = args;
-		})
-		.catch((err) => {
-			console.error(err);
 		});
 };
 

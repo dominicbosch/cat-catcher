@@ -26,7 +26,7 @@ class Device:
 
     def AllocateGraph(self, blob):
         print('STUB: mvncapi Device AllocateGraph')
-        return Graph(0)
+        return Graph()
 
     def CloseDevice(self):
         print('STUB: mvncapi Device CloseDevice')

@@ -97,4 +97,5 @@ except:
 	traceback.print_exc()
 
 finally:
-	detector.stop()
+	if detector is not None:
+		detector.stop()

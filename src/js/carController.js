@@ -37,7 +37,6 @@ exports.init = function(config) {
 	if(miss.length > 0) return Promise.reject(new Error('Some confuration is missing: '+miss.join(', ')));
 
 	if(conf.v) console.log('Initializing with config:\n'+JSON.stringify(conf, null, 2));
-	let ret = car.init(conf);
 	pyFaces.init(conf);
 
 	numMeasurements = conf.obstacleCount;
@@ -50,7 +49,7 @@ exports.init = function(config) {
 	pyFaces.on('storedimage', function(d) { emitEvent('storedimage', d); });
 	pyFaces.on('storedface', function(d) { emitEvent('storedface', d); });
 
-	return ret;
+	return car.init(conf);
 };
 exports.start = function() {
 	if(conf.v) console.log('CarController started!');

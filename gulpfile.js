@@ -4,8 +4,9 @@ const clean = require('gulp-clean');
 const install = require('gulp-install');
 // const exec = require('child_process').exec;
 
-let deployProd = gulp.parallel(npmInstall, deploySources);
-let deployDev = gulp.parallel(npmInstall, deploySources, deployDevStubsJS, deployDevStubsPython);
+let deploy = gulp.parallel(npmInstall, deploySources);
+let deleteStubs = gulp.parallel(deleteDevStubsJS, deleteDevStubsPython);
+let deployProd = gulp.series(deploy, deleteStubs);
 
 /**
  *  Make everything clean and tidy to start from scratch
@@ -20,7 +21,7 @@ gulp.task('build', gulp.series('clean', deployProd));
 /**
  * Clean first and the move all relevant development sources to the build folder
  */
-gulp.task('build-dev', gulp.series('clean', deployDev));
+gulp.task('build-dev', gulp.series('clean', deploy));
 
 /**
  * Run the cat-catcher on the raspberry
@@ -62,19 +63,19 @@ function deploySources() {
 }
 
 /**
- * Deploy the JS dev stubs needed for development. Not needed when on the raspberry
+ * Delete the JS dev stubs needed for development. Not needed when on the raspberry
  */
-function deployDevStubsJS() {
-	return gulp.src(['stubs/js/**/*'], { base: 'stubs/js' })
-		.pipe(gulp.dest('build/js/node_modules'));
+function deleteDevStubsJS() {
+	return gulp.src(['build/js/node_modules'])
+		.pipe(clean());
 }
 
 /**
- * Deploy the Python dev stubs needed for development. Not needed when on the raspberry
+ * Delete the Python dev stubs needed for development. Not needed when on the raspberry
  */
-function deployDevStubsPython() {
-	return gulp.src(['stubs/py/**/*'], { base: 'stubs/py' })
-		.pipe(gulp.dest('build/py'));
+function deleteDevStubsPython() {
+	return gulp.src(['build/py/cv2', 'build/py/mvnc', 'build/py/picamera', 'build/py/skimage'])
+		.pipe(clean());
 }
 
 function runCatCatcher() {

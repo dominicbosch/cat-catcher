@@ -14,19 +14,24 @@ class YoloClassifier:
 			raise Exception('No Movidius found!')
 
 		device = mvnc.Device(devices[0])
-		try:
-			device.OpenDevice()
+		# try:
+		print('HALLO')
+		device.OpenDevice()
 
-			rootPath = ('/'.join(os.path.realpath(__file__).split('/')[:-1]))+'/'
-			with open(rootPath+graphFile, mode='rb') as f:
-				blob = f.read()
-			graph = device.AllocateGraph(blob)
-			graph.SetGraphOption(mvnc.GraphOption.ITERATIONS, 1)
-			self.verbose = verbose
-			self.device = device
-			self.graph = graph
-		except:
-			raise Exception('Unable to open device! Maybe re-plug it or reboot and try again... thanks')
+		rootPath = ('/'.join(os.path.realpath(__file__).split('/')[:-1]))+'/'
+		print(rootPath)
+		with open(rootPath+graphFile, mode='rb') as f:
+			blob = f.read()
+		graph = device.AllocateGraph(blob)
+		graph.SetGraphOption(mvnc.GraphOption.ITERATIONS, 1)
+		self.verbose = verbose
+		self.device = device
+		self.graph = graph
+		# except Exception as inst:
+		# 	print(type(inst))    # the exception instance
+		# 	print(inst.args)     # arguments stored in .args
+		# 	print(inst) 
+		# 	raise Exception('Unable to open device! Maybe re-plug it or reboot and try again... thanks')
 
 
 	def classify(self, img):
