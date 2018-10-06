@@ -6,8 +6,8 @@ const MICROSECDONDS_PER_CM = 1e6/34321;
 
 module.exports = class Ultrasonic {
 	constructor(pinTrigger, pinEcho, interval) {
-		this.trigger = new Gpio(pinTrigger || 4, {mode: Gpio.OUTPUT});
-		this.echo = new Gpio(pinEcho || 17, {mode: Gpio.INPUT, alert: true});
+		this.trigger = new Gpio(pinTrigger || 23, {mode: Gpio.OUTPUT});
+		this.echo = new Gpio(pinEcho || 24, {mode: Gpio.INPUT, alert: true});
 		this.trigger.digitalWrite(0); // Make sure trigger is low
 		// TODO we should average over at least three measurements, therefore divide
 		// the interval by three and only return the average
