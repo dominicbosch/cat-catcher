@@ -1,12 +1,13 @@
-# Setup a Raspberry from Scratch for this project
+# Cat-catcher Raspberry Setup
 
 - Download [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/)
-- Flash to SD card and plug SD card into raspberry.
+- Flash to (minimum) 16 GB SD card and plug SD card into raspberry.
 
+This instruction is updated for Raspbian Stretch Lite 4.14
 
 ## Configure SSH, Safety and Wireless
 
-- Boot with screen and keyboard connected to raspberry
+- Boot with screen and keyboard connected to raspberry. It is not necessary to fiddle with the locales. After connecting to the wireless, we will only connect via ssh to the raspberry.
 - Login with user `pi` password `raspberry`
 - `sudo passwd pi` (change password to something safe)
 - `sudo raspi-config`:
@@ -30,8 +31,13 @@
 
 - Reboot
 
-      sudo apt install python-smbus i2c-tools feh git python-skimage python-picamera pigpio
-      sudo raspi-config
+- Install Prerequisites:
+
+      curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+      sudo apt install python-smbus i2c-tools feh git python-skimage python-picamera pigpio nodejs
+      npm install gulp-cli -g
+
+- Change Configuration `sudo raspi-config`: 
 
   - `[7 -> A1]` Expand filesystem
   - `[5 -> P1]` Enable camera
@@ -47,18 +53,13 @@
 
 ## Install Movidius Neural Compute Stick
 
-This will take a while on the Raspberry because it also installs OpenCV, which has been a pain before. Thank you Movidius for making this easy ;)
+We currently use Version 1:
 
-
-	cd ~/projects
-	git clone http://github.com/Movidius/ncsdk
-	cd ncsdk
-	make install
-
-Open new shell and execute:
-
-	make examples
-
+    wget https://ncs-forum-uploads.s3.amazonaws.com/ncsdk/ncsdk-01_12_00_01-full/ncsdk-1.12.00.01.tar.gz
+    tar xvf ncsdk-1.12.00.01.tar.gz
+    cd ncsdk-1.12.00.01
+    make install
+    make examples (without installing OpenCV)
 
 ## Clone yoloNCS
 
@@ -71,17 +72,16 @@ Great framework for location detection of classified object in image
 
 - Store caffemodel from [here](https://drive.google.com/file/d/0Bzy9LxvTYIgKNFEzOEdaZ3U0Nms/view?usp=sharing) in `~/projects/yoloNCS/.weights` folder
 
-
 ## Clone cat-Catcher Project
 
 	cd ~/projects
 	git clone https://github.com/dominicbosch/cat-catcher.git
 	cd cat-catcher
-	npm install --production
+	npm install
 
 
 ## Compile yoloNCS graph
 
 	cd ~/projects/yoloNCS
 	mvNCCompile prototxt/yolo_tiny_deploy.prototxt -w .weights/yolo_tiny.caffemodel -s 12
-	mv graph ~/projects/cat-catcher/dist
+	mv graph ~/projects/cat-catcher/build
