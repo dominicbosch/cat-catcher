@@ -23,19 +23,11 @@ This instruction is updated for Raspbian Stretch Lite 4.14
 
 - Plug in power
 - Connect to raspi via SSH using new hostname (e.g. `ssh pi@cat-catcher-1`)
-- Update & Configure Raspberry:
-
-      sudo apt update
-      sudo apt upgrade
-      sudo rpi-update
-
-- Reboot
-
 - Install Prerequisites:
 
-      curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-      sudo apt install python-smbus i2c-tools feh git python-skimage python-picamera pigpio nodejs
-      npm install gulp-cli -g
+	curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+	sudo apt install python-smbus i2c-tools feh git python-skimage python-picamera pigpio nodejs
+	npm install gulp-cli -g
 
 - Change Configuration `sudo raspi-config`: 
 
@@ -46,20 +38,19 @@ This instruction is updated for Raspbian Stretch Lite 4.14
 	
 - Verify & Reboot:
 
-      mkdir ~/projects
-      sudo i2cdetect -y 1 # (verify PWM Hat is connected)
-      sudo reboot now
+	mkdir ~/projects
+	sudo i2cdetect -y 1 # (verify PWM Hat is connected)
+	sudo reboot now
 
 
 ## Install Movidius Neural Compute Stick
 
 We currently use Version 1:
 
-    wget https://ncs-forum-uploads.s3.amazonaws.com/ncsdk/ncsdk-01_12_00_01-full/ncsdk-1.12.00.01.tar.gz
-    tar xvf ncsdk-1.12.00.01.tar.gz
-    cd ncsdk-1.12.00.01
-    make install
-    make examples (without installing OpenCV)
+	git clone https://github.com/movidius/ncsdk.git
+	cd ncsdk
+	make install
+	make examples (say no to OpenCV installation)
 
 ## Clone yoloNCS
 
@@ -78,6 +69,7 @@ Great framework for location detection of classified object in image
 	git clone https://github.com/dominicbosch/cat-catcher.git
 	cd cat-catcher
 	npm install
+	gulp build
 
 
 ## Compile yoloNCS graph
