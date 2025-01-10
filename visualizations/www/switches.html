@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+	<title>Awesome Visualization</title>
+</head>
+<style>
+
+.node {
+  font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.bar {
+	height: 20px;
+}
+
+.On {
+	background: green;
+}
+
+.Off {
+	background: red;
+}
+#chart > div > div {
+	float: left;
+}
+#chart > div {
+	height: 30px;
+}
+
+</style>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+
+<script type="text/javascript">
+	$( document ).ready( function() {
+		var id, time, state, arrRow, arrData = $( '#data' ).html().split( '\n' ),
+			oSensor = {};
+
+		for( var i = 0; i < arrData.length; i++ ) {
+			arrRow = arrData[ i ].split( ', ' );
+			id = arrRow[ 0 ];
+			time = arrRow[ 1 ];
+			state = arrRow[ 2 ];
+			if( !oSensor[ id ] ) {
+				oSensor[ id ] = {
+					id: id,
+					lastState: state,
+					lastTime: time,
+					data: []
+				};
+			}
+			if( oSensor[ id ].lastState !== state ) {
+				oSensor[ id ].data.push({
+					state: oSensor[ id ].lastState,
+					durance: time - oSensor[ id ].lastTime
+				});
+				oSensor[ id ].lastState = state;
+				oSensor[ id ].lastTime = time;
+			}
+		}
+		var dat = [];
+		for( var el in oSensor ) {
+			if( el !== '' ) dat.push( oSensor[ el ] );
+		}
+		console.log(d3.select( '#chart' ));
+		d3.select( '#chart' )
+			.selectAll( 'div' ).data( dat ).enter()
+				.append( 'div' ).text( function( d ) { return 'ID: ' + d.id; })
+				.selectAll( 'div' ).data( function( d, i ) { return d.data; }).enter()
+					.append( 'div' )//.text( function( d ) { return 'state: ' + d.state; })
+						.attr( 'class', function( d ) { return 'bar ' + d.state; })
+						.attr( 'title', function( d ) { return d.durance/1000 + 's'; })
+						.style( 'width', function( d ){ return d.durance/1000 + 'px' } ); 
+			// .append( 'div' ).text( function( d ) { return d.state });
+
+		d3.selectAll( '#chart > div' ).append( 'br' );
+		console.log( oSensor );
+	});
+// d3.csv( 'switch_purged.inf').get(function(error, data) {
+//       // callback
+//       console.log(error);
+//       console.log(data);
+//       alert('Yeah!');
+    // });
+</script>
+
+<div id="chart"></div>
+<script id="data" type="text/template">
+2, 1417344016, Off
+</script>
